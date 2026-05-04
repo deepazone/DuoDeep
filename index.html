@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Английский 3 класс</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#58CC02;--gd:#46a302;--gl:#d7f5b1;
+  --red:#FF4B4B;--rd:#c03030;--rl:#ffd0d0;
+  --blue:#1CB0F6;--bl:#ddf4ff;
+  --yellow:#FFC800;--yl:#fff8e1;
+  --gray:#F7F7F7;--g2:#E5E5E5;--g3:#d0d0d0;
+  --text:#3C3C3C;--mut:#777;--white:#fff;--bord:#E5E5E5;
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;background:var(--gray);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── TOP BAR ── */
+.bar{background:var(--white);border-bottom:2px solid var(--bord);padding:11px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.xb{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mut);padding:2px 6px;border-radius:8px;line-height:1}
+.xb:hover{background:var(--gray)}
+.pw{flex:1;height:14px;background:var(--g2);border-radius:7px;overflow:hidden}
+.pf{height:100%;background:linear-gradient(90deg,var(--green) 0%,#7bda1a 100%);border-radius:7px;transition:width .5s cubic-bezier(.4,2,.6,1);min-width:0}
+.hts{display:flex;gap:2px;flex-shrink:0}
+.ht{font-size:20px;transition:transform .3s,opacity .3s}
+.ht.lost{opacity:.18;transform:scale(.78)}
+
+/* ── SCREENS ── */
+.scr{display:none}
+.scr.on{display:block}
+
+/* ── HOME ── */
+#home{max-width:540px;margin:0 auto;padding:28px 16px}
+.hero{text-align:center;margin-bottom:26px}
+.owl{font-size:62px;display:block;animation:bob 2.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.htitle{font-size:25px;font-weight:900;margin:10px 0 5px}
+.hsub{font-size:14px;color:var(--mut);font-weight:600}
+.tlist{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.tc{background:var(--white);border:2.5px solid var(--bord);border-radius:var(--r);padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:all .14s}
+.tc:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.07)}
+.tci{font-size:26px;flex-shrink:0}
+.tcn{font-size:15px;font-weight:800}
+.tcc{font-size:12px;color:var(--mut);font-weight:600;margin-top:1px}
+.tall{display:block;width:100%;background:var(--green);color:#fff;border:none;border-radius:14px;padding:15px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:all .14s}
+.tall:hover{background:var(--gd)}
+.tall:active{transform:translateY(2px);box-shadow:0 2px 0 var(--gd)}
+
+/* ── GAME ── */
+.main{flex:1;max-width:540px;width:100%;margin:0 auto;padding:18px 16px 140px}
+
+/* streak dots */
+.dots{display:flex;gap:5px;margin-bottom:18px;justify-content:center;flex-wrap:wrap}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--g2);transition:background .25s,transform .25s}
+.dot.ok{background:var(--green);transform:scale(1.2)}
+.dot.er{background:var(--red)}
+
+/* mode badge */
+.mbadge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;padding:4px 11px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.mbadge.choose{background:#fff3e0;color:#e65100}
+.mbadge.build{background:#e8f5e9;color:#2e7d32}
+
+.tlabel{font-size:12px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.qtxt{font-size:20px;font-weight:800;line-height:1.38;margin-bottom:20px}
+
+/* ── CHOOSE ── */
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:var(--white);border:2.5px solid var(--bord);border-radius:var(--r);padding:13px 15px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--text);text-align:left;cursor:pointer;transition:border-color .12s,background .12s,transform .1s;display:flex;align-items:center;gap:11px;line-height:1.38}
+.opt:hover:not(:disabled){border-color:var(--blue);background:var(--bl);transform:translateY(-1px)}
+.opt:active:not(:disabled){transform:scale(.98)}
+.ol{width:30px;height:30px;border-radius:8px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:var(--mut);transition:background .12s,color .12s}
+.opt.ok{border-color:var(--green);background:var(--gl)}
+.opt.ok .ol{background:var(--green);color:#fff}
+.opt.er{border-color:var(--red);background:var(--rl)}
+.opt.er .ol{background:var(--red);color:#fff}
+.opt.rv{border-color:var(--green);background:var(--gl)}
+.opt.rv .ol{background:var(--green);color:#fff}
+.opt:disabled{cursor:default}
+
+/* ── BUILD ── */
+.drop{min-height:58px;border:2.5px dashed var(--bord);border-radius:var(--r);padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px;margin-bottom:13px;background:var(--white);transition:border-color .2s,background .2s;align-items:center}
+.drop.has{border-style:solid;border-color:var(--blue);background:var(--bl)}
+.drop.ok2{border-color:var(--green)!important;background:var(--gl)!important}
+.drop.er2{border-color:var(--red)!important;background:var(--rl)!important}
+.drop-ph{color:#bbb;font-size:13px;font-weight:600}
+.pool{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.chip{background:var(--white);border:2.5px solid var(--bord);border-radius:10px;padding:7px 13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .13s;user-select:none;line-height:1}
+.chip:hover:not(:disabled){border-color:var(--blue);background:var(--bl);transform:translateY(-1px)}
+.chip.used{opacity:.28;cursor:default;border-style:dashed}
+.chip.in{background:var(--bl);border-color:var(--blue)}
+
+/* ── FEEDBACK ── */
+.fb{position:fixed;bottom:0;left:0;right:0;padding:16px 16px 26px;transform:translateY(102%);transition:transform .27s cubic-bezier(.4,0,.2,1);z-index:20}
+.fb.show{transform:translateY(0)}
+.fb.ok{background:var(--gl);border-top:3px solid var(--green)}
+.fb.er{background:var(--rl);border-top:3px solid var(--red)}
+.fbi{max-width:540px;margin:0 auto;display:flex;align-items:flex-start;gap:11px}
+.fbe{font-size:28px;flex-shrink:0;margin-top:2px}
+.fbd{flex:1;min-width:0}
+.fbtitle{font-size:15px;font-weight:900;margin-bottom:2px}
+.fb.ok .fbtitle{color:var(--gd)}
+.fb.er .fbtitle{color:var(--rd)}
+.fbans{font-size:13px;font-weight:700;color:var(--mut);margin-bottom:3px;word-break:break-word}
+.fbwhy{font-size:13px;color:var(--text);line-height:1.5}
+.fbwhy b{font-weight:800}
+.cbtn{background:var(--green);color:#fff;border:none;border-radius:13px;padding:12px 20px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:all .12s;flex-shrink:0;align-self:center}
+.cbtn:hover{background:var(--gd)}
+.cbtn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--gd)}
+.fb.er .cbtn{background:var(--red);box-shadow:0 4px 0 var(--rd)}
+.fb.er .cbtn:hover{background:var(--rd)}
+
+/* ── CHECK ── */
+.cw{position:fixed;bottom:0;left:0;right:0;padding:12px 16px 24px;background:var(--gray);border-top:2px solid var(--bord);z-index:5}
+.ckbtn{display:block;width:100%;max-width:540px;margin:0 auto;background:var(--g2);color:var(--mut);border:none;border-radius:13px;padding:14px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:not-allowed;box-shadow:0 4px 0 var(--g3);transition:all .18s}
+.ckbtn.on{background:var(--green);color:#fff;cursor:pointer;box-shadow:0 4px 0 var(--gd)}
+.ckbtn.on:hover{background:var(--gd)}
+.ckbtn.on:active{transform:translateY(2px);box-shadow:0 2px 0 var(--gd)}
+
+/* ── TOAST ── */
+.toast{position:fixed;top:56px;right:14px;background:var(--yellow);color:#7a5a00;font-size:13px;font-weight:900;padding:5px 13px;border-radius:20px;animation:fly 1s ease forwards;z-index:100;pointer-events:none}
+@keyframes fly{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-26px)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.shake{animation:shake .35s ease}
+
+/* ── FINISH ── */
+#fin{max-width:540px;margin:0 auto;padding:36px 16px;text-align:center}
+.fowl{font-size:70px;display:block;margin-bottom:12px}
+.ftitle{font-size:25px;font-weight:900;margin-bottom:6px}
+.fsub{font-size:14px;color:var(--mut);font-weight:600;margin-bottom:26px}
+.fstats{display:flex;gap:10px;justify-content:center;margin-bottom:26px;flex-wrap:wrap}
+.fs{background:var(--white);border:2.5px solid var(--bord);border-radius:var(--r);padding:13px 18px;text-align:center;min-width:85px}
+.fsn{font-size:24px;font-weight:900}
+.fsl{font-size:11px;font-weight:700;color:var(--mut);margin-top:2px}
+.fs.xp .fsn{color:var(--yellow)}
+.fs.ok .fsn{color:var(--green)}
+.fs.er .fsn{color:var(--red)}
+.fbtn{display:block;width:100%;background:var(--green);color:#fff;border:none;border-radius:13px;padding:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 var(--gd);margin-bottom:10px;transition:all .14s}
+.fbtn:hover{background:var(--gd)}
+.fbtn.sec{background:var(--white);color:var(--green);border:2.5px solid var(--green);box-shadow:none}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="home" class="scr on">
+  <div class="hero">
+    <span class="owl">🦉</span>
+    <div class="htitle">Английский 3 класс</div>
+    <div class="hsub">Верещагина · Два режима · Все вопросы из учебника</div>
+  </div>
+  <div class="tlist" id="tlist"></div>
+  <button class="tall" onclick="start('all')">▶ Все темы вперемешку</button>
+</div>
+
+<!-- GAME -->
+<div id="game" class="scr">
+  <div class="bar">
+    <button class="xb" onclick="goHome()">✕</button>
+    <div class="pw"><div class="pf" id="pf" style="width:0%"></div></div>
+    <div class="hts" id="hts"></div>
+  </div>
+  <div class="main" id="gmain">
+    <div class="dots" id="dots"></div>
+    <div class="mbadge" id="mbadge"></div>
+    <div class="tlabel" id="tlabel"></div>
+    <div class="qtxt" id="qtxt"></div>
+    <div id="azone"></div>
+  </div>
+  <div class="cw" id="cw">
+    <button class="ckbtn" id="ckbtn" disabled onclick="doCheck()">ПРОВЕРИТЬ</button>
+  </div>
+  <div class="fb" id="fb">
+    <div class="fbi">
+      <div class="fbe" id="fbe"></div>
+      <div class="fbd">
+        <div class="fbtitle" id="fbtitle"></div>
+        <div class="fbans" id="fbans"></div>
+        <div class="fbwhy" id="fbwhy"></div>
+      </div>
+      <button class="cbtn" onclick="nextQ()">ДАЛЬШЕ</button>
+    </div>
+  </div>
+</div>
+
+<!-- FINISH -->
+<div id="fin" class="scr">
+  <span class="fowl" id="fowl">🎉</span>
+  <div class="ftitle" id="ftitle">Урок завершён!</div>
+  <div class="fsub" id="fsub"></div>
+  <div class="fstats">
+    <div class="fs xp"><div class="fsn" id="fxp">0</div><div class="fsl">⭐ XP</div></div>
+    <div class="fs ok"><div class="fsn" id="fok">0</div><div class="fsl">✓ Верно</div></div>
+    <div class="fs er"><div class="fsn" id="fer">0</div><div class="fsl">✗ Ошибок</div></div>
+  </div>
+  <button class="fbtn" onclick="start(lastTopic)">🔄 Ещё раз</button>
+  <button class="fbtn sec" onclick="goHome()">← Выбрать тему</button>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// ДАННЫЕ — строго с фотографий
+// ═══════════════════════════════════════════════
+const TOPICS=[
+  {id:'food',    icon:'🍕', name:'Еда'},
+  {id:'hols',    icon:'🎄', name:'Праздники'},
+  {id:'animals', icon:'🐾', name:'Животные'},
+  {id:'clothes', icon:'👕', name:'Одежда'},
+  {id:'seasons', icon:'🌤', name:'Времена года'},
+  {id:'months',  icon:'📅', name:'Английский год'},
+];
+
+const CARDS={
+food:[
+  {q:"What do you think is tasty food?",a:"I think pizza is tasty food.",why:"<b>I think</b> = я думаю + называем еду."},
+  {q:"What is tasty food for you?",a:"Pizza is tasty food for me.",why:"<b>for you</b> → <b>for me</b>. Меняем только это слово."},
+  {q:"What food do you like to eat?",a:"I like to eat pizza.",why:"<b>do you like to eat?</b> → <b>I like to eat</b> + что."},
+  {q:"What is your favourite food?",a:"My favourite food is pizza.",why:"<b>your favourite</b> → <b>my favourite</b>. Меняем your → my."},
+  {q:"Do you like apples?",a:"Yes, I do. I like apples.",why:"<b>Do you?</b> → <b>Yes, I do.</b> Потом полное предложение."},
+  {q:"Who likes milk in your family?",a:"My mother likes milk in my family.",why:"Мама = «она» → глагол с <b>-s</b>: like<b>s</b>."},
+  {q:"How many meals a day do you usually have?",a:"I usually have 3 meals a day.",why:"<b>usually</b> = обычно, стоит ПЕРЕД глаголом."},
+  {q:"What do you think is bad food?",a:"I think fast food is bad food.",why:"<b>I think</b> + называем. <b>fast food</b> = фастфуд."},
+  {q:"What is your favourite vegetable?",a:"My favourite vegetable is a carrot.",why:"Шаблон: <b>My favourite ... is a + название.</b>"},
+  {q:"What vegetable do you like?",a:"I like carrots.",why:"<b>I like + что.</b> Carrots = морковь."},
+  {q:"What do you usually eat when you are hungry?",a:"I usually eat a banana when I'm hungry.",why:"<b>you are</b> → <b>I'm</b>. <b>hungry</b> = голодный."},
+  {q:"What do you usually drink when you are thirsty?",a:"I usually drink water when I'm thirsty.",why:"<b>thirsty</b> = хочу пить. <b>you are</b> → <b>I'm</b>."},
+  {q:"What do people make from milk?",a:"People make butter, ice cream and yoghurt from milk.",why:"People (они) → <b>make</b> без -s."},
+  {q:"Do you eat the right food?",a:"Yes, I do. I eat the right food.",why:"<b>Do you?</b> → <b>Yes, I do.</b> Потом повторяем."},
+  {q:"What food is bad for you?",a:"Chocolate is bad food for me.",why:"<b>for you</b> → <b>for me</b>."},
+  {q:"What food is good for you?",a:"Broccoli is good food for me.",why:"<b>for you</b> → <b>for me</b>."},
+  {q:"What fruit do you like most of all?",a:"I like bananas most of all.",why:"<b>most of all</b> = больше всего."},
+  {q:"Where do people get food from?",a:"People get food from the shops.",why:"<b>from the shops</b> = из магазинов."},
+  {q:"What can you grow in the garden?",a:"We can grow carrots and tomatoes in the garden.",why:"После <b>can</b> глагол без -s."},
+  {q:"Who usually buys food in your family?",a:"My mother usually buys food in my family.",why:"Мама = «она»: <b>buy → buys</b>."},
+  {q:"What food does your mother usually buy in the shop?",a:"My mother usually buys bread, butter and milk in the shop.",why:"Вопрос с <b>does</b> — значит про «она». Ответ: <b>buys</b> с -s."},
+  {q:"Are you a good eater?",a:"Yes, I am. I am a good eater.",why:"<b>Are you?</b> → <b>Yes, I am.</b> (не «Yes, I do»!)"},
+  {q:"What do you like to drink?",a:"I like to drink water.",why:"После <b>to</b> глагол без изменений: <b>to drink</b>."},
+  {q:"Have you got a sweet tooth?",a:"Yes, I have. I have got a sweet tooth.",why:"<b>Have you got?</b> → <b>Yes, I have.</b> sweet tooth = сладкоежка."},
+  {q:"Can people live without food?",a:"No, they can't. They can't live without food.",why:"People = they. <b>Can?</b> → <b>No, they can't.</b>"},
+  {q:"Where does our food come from?",a:"Our food comes from plants and animals.",why:"Еда = «она» → <b>comes</b> с -s."},
+  {q:"What right food do you eat?",a:"I eat fruit and vegetables because I want to be healthy.",why:"<b>because</b> = потому что. <b>healthy</b> = здоровый."},
+],
+hols:[
+  {q:"Do you usually have a party on your birthday?",a:"Yes, I do. I usually have a party on my birthday.",why:"<b>Do you?</b> → <b>Yes, I do.</b> Меняем <b>your</b> → <b>my</b>."},
+  {q:"Who usually comes to your birthday party?",a:"My friends and relatives come to my birthday party.",why:"Они (друзья) → <b>come</b> без -s. relatives = родственники."},
+  {q:"Who usually gives you birthday presents?",a:"My friends and relatives usually give me birthday presents.",why:"Они → <b>give</b> без -s."},
+  {q:"What presents do you like to get or give?",a:"I like to get and give books and toys.",why:"После <b>to</b> глагол без изменений."},
+  {q:"What holidays do you know?",a:"I know Christmas and New Year.",why:"<b>I know + список.</b> Christmas = Рождество."},
+  {q:"What holiday do you like most of all and why?",a:"I like New Year most of all because I like to get and give presents.",why:"<b>why</b> → обязательно <b>because</b> + причина!"},
+  {q:"How do you celebrate New Year?",a:"I decorate my Christmas tree and have a party.",why:"<b>How</b> = как. Перечисляем через <b>and</b>."},
+  {q:"How do people in Russia celebrate New Year?",a:"People in Russia decorate houses and Christmas trees and have parties.",why:"People (они) → <b>decorate</b> без -s."},
+  {q:"When do you celebrate New Year?",a:"I celebrate New Year on the 31st of December.",why:"Дата с предлогом <b>on</b>: on the 31st of December."},
+  {q:"When do people in Russia celebrate New Year?",a:"People in Russia celebrate New Year on the 31st of December.",why:"People (они) → <b>celebrate</b> без -s."},
+  {q:"When do people in Great Britain celebrate New Year?",a:"People in Great Britain celebrate New Year on the 31st of December.",why:"В Великобритании тоже 31 декабря."},
+  {q:"How do you decorate your Christmas tree?",a:"I decorate my Christmas tree with toys, coloured balls and coloured lights.",why:"<b>decorate with</b> = украшать при помощи."},
+  {q:"When do you celebrate Christmas?",a:"I celebrate Christmas on the seventh of January.",why:"Россия: Рождество 7 января."},
+  {q:"When do English people celebrate Christmas?",a:"English people celebrate Christmas on the 25th of December.",why:"Англия: Рождество 25 декабря."},
+  {q:"When do people from Great Britain celebrate Christmas?",a:"People from Great Britain celebrate Christmas on the 25th of December.",why:"Great Britain = Великобритания. 25th of December."},
+  {q:"Where do English people put Christmas presents?",a:"English people put Christmas presents under the Christmas tree on Christmas Eve.",why:"<b>under the Christmas tree</b> = под ёлкой."},
+  {q:"Where does Father Christmas put presents for children?",a:"Father Christmas puts presents for children in the stockings.",why:"Он → put<b>s</b> с -s. stockings = чулки."},
+  {q:"Do all English people celebrate New Year?",a:"No, not all English people celebrate New Year.",why:"<b>not all</b> = не все (не путать с nobody = никто)."},
+  {q:"Do you make New Year's resolutions?",a:"Yes, I do. I make New Year's resolutions.",why:"resolutions = обещания на новый год."},
+  {q:"Do you always keep your New Year's resolutions?",a:"Yes, I do. I always keep my New Year's resolutions.",why:"<b>always</b> = всегда. Стоит ПЕРЕД глаголом."},
+  {q:"Do you celebrate Christmas?",a:"Yes, I do. I celebrate Christmas.",why:"<b>Do you?</b> → <b>Yes, I do.</b>"},
+  {q:"How do people decorate houses before New Year?",a:"People decorate houses with Christmas trees, coloured balls and coloured lights.",why:"<b>with</b> = с помощью. People (они) → decorate без -s."},
+  {q:"Do people send and get greeting cards before Christmas?",a:"Yes, they do. They send and get greeting cards before Christmas.",why:"People = they. <b>Do people?</b> → <b>Yes, they do.</b>"},
+  {q:"What do you usually write on the cards?",a:"I usually write Happy New Year and wish merry holidays on the cards.",why:"<b>usually</b> = обычно, стоит перед глаголом."},
+  {q:"Where can people get Christmas cards?",a:"People can buy Christmas cards in the shop or make them.",why:"После <b>can</b> глагол без изменений."},
+  {q:"What do English children do before they go to bed on Christmas?",a:"English children put stockings near their beds before they go to bed on Christmas.",why:"stockings = чулки/носки. Children (они) → <b>put</b> без -s."},
+  {q:"What do English people eat on Christmas?",a:"English people eat turkey, potatoes, green vegetables, Christmas pudding and a cake on Christmas.",why:"turkey = индейка. People (они) → <b>eat</b> без -s."},
+  {q:"What day comes before Christmas?",a:"Christmas Eve comes before Christmas.",why:"Christmas Eve = 24 декабря, канун Рождества."},
+  {q:"What day comes after Christmas?",a:"Boxing Day comes after Christmas.",why:"Boxing Day = 26 декабря, день подарков."},
+  {q:"Who comes at night at Christmas?",a:"Father Christmas comes at night at Christmas.",why:"Father Christmas = он → come<b>s</b> с -s."},
+  {q:"What presents do you like to give to your relatives?",a:"I like to give books and board games to my relatives.",why:"relatives = родственники. board games = настольные игры."},
+  {q:"What holidays do you get presents on?",a:"I get presents on my birthday, New Year and Christmas.",why:"<b>on</b> + праздник = на праздник."},
+  {q:"What do you make or keep at New Year?",a:"Yes, I do. I make and keep New Year's resolutions.",why:"make = давать обещания, keep = выполнять обещания."},
+],
+animals:[
+  {q:"Have you got a pet?",a:"Yes, I have. I have got a pet.",why:"<b>Have you got?</b> → <b>Yes, I have.</b> (не «Yes, I do»!)"},
+  {q:"Has your friend got a pet?",a:"Yes, he has. He has got a pet.",why:"Друг = «он». <b>Has?</b> → <b>Yes, he has.</b> has — для он/она!"},
+  {q:"What pet have you got?",a:"I have got a cat.",why:"<b>I have got a + животное.</b> Артикль a обязателен."},
+  {q:"What is your pet's name?",a:"My pet's name is Barsik.",why:"pet<b>'s</b> = питомца. Меняем your → my."},
+  {q:"How old is your pet?",a:"My pet is 3 years old.",why:"<b>How old</b> = сколько лет. <b>years old</b> = лет."},
+  {q:"What colour is your pet?",a:"My pet is black and white.",why:"<b>What colour</b> = какого цвета. Цвет В КОНЦЕ."},
+  {q:"What can your pet do?",a:"My pet can jump and run.",why:"После <b>can</b> глагол без -s: can jump (не jumps)."},
+  {q:"What do you give your pet to eat and to drink?",a:"I give my pet water to drink and food to eat.",why:"<b>give my pet + что + to + глагол.</b>"},
+  {q:"Who looks after your pet?",a:"My mother looks after my pet.",why:"Мама (она) → look<b>s</b> с -s. Я → <b>I look</b> без -s."},
+  {q:"How do you look after your pet?",a:"I play with my pet and take him for a walk every day.",why:"<b>every day</b> = каждый день. Действия через <b>and</b>."},
+  {q:"What do you teach your pet to do?",a:"I teach my pet to give me a paw.",why:"<b>give a paw</b> = давать лапу. После to — без -s."},
+  {q:"What does your pet like to eat and to drink?",a:"My pet likes to drink water and to eat meat.",why:"Питомец = «он/она» → like<b>s</b> с -s."},
+  {q:"Who takes your pet for a walk?",a:"My mother takes our pet for a walk.",why:"Мама (она) → take<b>s</b> с -s."},
+  {q:"What pets do people have in Russia and Great Britain?",a:"People in Russia and Great Britain usually have cats or dogs.",why:"People (они) → <b>have</b> без -s."},
+  {q:"Do you like to go to the Zoo?",a:"Yes, I do. I like to go to the Zoo and feed animals there.",why:"<b>Do you like to?</b> → <b>Yes, I do. I like to.</b>"},
+  {q:"Who do you go to the Zoo with?",a:"I go to the Zoo with my family.",why:"<b>with my family</b> = с семьёй. your → my."},
+  {q:"What animals can you see at the Zoo?",a:"I can see monkeys, giraffes and lions at the Zoo.",why:"<b>at the Zoo</b> = в зоопарке. После can — без -s."},
+  {q:"What animals do you like to watch at the Zoo?",a:"I like to watch monkeys at the Zoo.",why:"<b>I like to watch + животные + at the Zoo.</b>"},
+  {q:"What animals are funny to watch?",a:"Monkeys are funny to watch.",why:"funny = смешной. Monkeys (они) → <b>are</b>."},
+  {q:"What animals can swim?",a:"Crocodiles and fish can swim.",why:"После <b>can</b> глагол без изменений."},
+  {q:"What animals do you think are clever?",a:"I think dogs are clever.",why:"<b>I think</b> (я думаю) + животные + are clever."},
+  {q:"What animals have got long tails?",a:"Foxes have got long tails.",why:"Лисы (они, много) → <b>have got</b> (один → has got)."},
+  {q:"What animals have got short tails?",a:"Hares have got short tails.",why:"Зайцы (много = «они») → <b>have got</b>."},
+  {q:"What wild animals do you know?",a:"I know lions, elephants and giraffes.",why:"<b>wild</b> = дикие. <b>I know + список.</b>"},
+  {q:"What domestic animals do you know?",a:"I know cows, horses, sheep and pigs.",why:"<b>domestic</b> = домашние (фермерские)."},
+  {q:"Where do wild animals live?",a:"Wild animals live in the forest.",why:"<b>in the forest</b> = в лесу. Предлог in."},
+  {q:"Where do domestic animals live?",a:"Domestic animals live on the farm.",why:"<b>on the farm</b> = на ферме. Предлог on."},
+  {q:"What is your favourite wild animal?",a:"My favourite wild animal is a lion.",why:"<b>My favourite ... is a + животное.</b>"},
+  {q:"What animal is the biggest?",a:"Elephant is the biggest.",why:"<b>the biggest</b> = самый большой. the обязателен!"},
+  {q:"Where can you see wild animals?",a:"I can see wild animals at the Zoo.",why:"<b>at the Zoo</b> = в зоопарке."},
+  {q:"What animal has got the longest nose?",a:"An elephant has got the longest nose.",why:"Один слон = «он» → <b>has got</b>. the longest = самый длинный."},
+  {q:"What animal has got the longest neck?",a:"A giraffe has got the longest neck.",why:"Один жираф = «он» → <b>has got</b>. neck = шея."},
+  {q:"What animals eat grass?",a:"Cows and horses eat grass.",why:"Животные (они) → <b>eat</b> без -s."},
+  {q:"What animals eat meat?",a:"Lions and tigers eat meat.",why:"Животные (они) → <b>eat</b> без -s."},
+  {q:"What animals live in the house?",a:"Pets live in the house.",why:"<b>in the house</b> = дома."},
+  {q:"Is it good to keep a wild animal at home?",a:"No, it isn't. It isn't good to keep a wild animal at home.",why:"<b>Is it?</b> → <b>No, it isn't.</b> (не «No, I don't»!)"},
+],
+clothes:[
+  {q:"Who usually buys clothes in your family?",a:"My mother usually buys clothes in my family.",why:"Мама = «она»: <b>buy → buys</b> с -s."},
+  {q:"Who usually goes shopping in your family?",a:"My mother usually goes shopping in my family.",why:"Мама = «она»: <b>go → goes</b> с -s."},
+  {q:"Who do you go shopping with?",a:"I go shopping with my mother.",why:"<b>with my mother</b> = с мамой. your → my."},
+  {q:"Do you like to go shopping with your parents?",a:"Yes, I do. I like to go shopping with my parents.",why:"<b>Do you?</b> → <b>Yes, I do.</b> your → my."},
+  {q:"Where do you usually buy clothes?",a:"We usually buy clothes in the shops.",why:"<b>in the shops</b> = в магазинах."},
+  {q:"What do you like to wear?",a:"I like to wear jeans and a T-shirt.",why:"<b>wear</b> = носить. <b>I like to wear + одежда.</b>"},
+  {q:"Do you try shoes on before you buy them?",a:"Yes, I do. I try shoes on before I buy them.",why:"<b>try on</b> = примерять. you → I."},
+  {q:"Do you wear jeans to school?",a:"No, I don't. I don't wear jeans to school.",why:"<b>No, I don't. I don't + то же самое.</b>"},
+  {q:"What do you like to wear in summer?",a:"I like to wear jeans and a T-shirt in summer.",why:"<b>in summer</b> = летом. Предлог in перед сезоном!"},
+  {q:"What colour jeans do you like to wear?",a:"I like to wear blue jeans.",why:"Цвет ПЕРЕД одеждой: blue jeans (не jeans blue!)."},
+  {q:"How often does your mother go shopping?",a:"My mother goes shopping every day.",why:"Мама (она) → <b>goes</b> с -s. every day = каждый день."},
+  {q:"What do you usually wear when it is cold?",a:"I usually wear a jacket and a hat when it's cold.",why:"Шаблон: <b>I usually wear + одежда + when it's + погода.</b>"},
+  {q:"What do you usually wear when it is hot?",a:"I usually wear shorts and a T-shirt when it's hot.",why:"<b>shorts</b> = шорты. <b>hot</b> = жарко."},
+  {q:"What do you like to wear: a cap or a hat?",a:"I like to wear a cap.",why:"Вопрос с or = выбор → выбираем один вариант."},
+  {q:"What do you wear boots or shoes in winter?",a:"I wear boots when I go for a walk in winter.",why:"boots = сапоги/ботинки. <b>go for a walk</b> = идти гулять."},
+  {q:"What do you wear on your head?",a:"I wear a cap on my head.",why:"<b>on my head</b> = на голове. your → my."},
+  {q:"What do you like to wear: jeans or trousers?",a:"I like to wear trousers.",why:"trousers = брюки/штаны. Выбираем один вариант."},
+  {q:"What colour jeans do you like: blue or black?",a:"I like to wear blue jeans.",why:"Выбираем цвет: blue = синий, black = чёрный."},
+  {q:"What do you usually wear in summer?",a:"I usually wear a T-shirt and shorts in summer.",why:"<b>I usually wear + одежда + in summer.</b>"},
+  {q:"What do you usually wear in winter?",a:"I usually wear an overcoat and boots in winter.",why:"<b>overcoat</b> = пальто. <b>an</b> перед гласной."},
+  {q:"What are your favourite clothes?",a:"My favourite clothes are jeans and a T-shirt.",why:"<b>your → my.</b> clothes всегда множественное число!"},
+  {q:"What colour clothes do you like to wear?",a:"I like to wear blue clothes.",why:"Цвет ПЕРЕД одеждой: blue clothes."},
+  {q:"What do you usually wear at home?",a:"I usually wear shorts and a T-shirt at home.",why:"<b>at home</b> = дома."},
+  {q:"What do you put on when you go to school?",a:"I wear and put on trousers to school.",why:"<b>put on</b> = надевать. to school = в школу."},
+  {q:"What do you wear when you go to a party?",a:"I usually wear jeans and a T-shirt when I go to a party.",why:"Копируем конец: <b>when I go to a party.</b> you → I."},
+  {q:"What do you wear when it is cold: an overcoat or a jacket?",a:"I wear an overcoat when it's cold.",why:"overcoat = пальто, jacket = куртка. Выбираем."},
+  {q:"What colour is your favourite shirt?",a:"My favourite shirt is blue.",why:"Цвет В КОНЦЕ: My shirt is blue (не blue is my shirt)."},
+],
+seasons:[
+  {q:"How many seasons do you know?",a:"I know 4 seasons of the year. They are winter, spring, summer and autumn.",why:"<b>How many</b> → I know 4. They are + список."},
+  {q:"What seasons do you know?",a:"I know 4 seasons. They are winter, spring, summer and autumn.",why:"winter = зима, spring = весна, summer = лето, autumn = осень."},
+  {q:"How many seasons are there in a year?",a:"There are 4 seasons in a year. They are winter, spring, summer and autumn.",why:"<b>How many...are there?</b> → <b>There are 4.</b> Запомни формулу!"},
+  {q:"What is your favourite season and why?",a:"My favourite season is summer because I have no school in summer.",why:"<b>why</b> → обязательно <b>because</b> + причина!"},
+  {q:"What season do you like most of all?",a:"I like summer most of all because I have no school in summer.",why:"<b>most of all</b> = больше всего. Нужно because!"},
+  {q:"What season is it now?",a:"It is autumn now.",why:"<b>It is + сезон + now.</b> Погода/время — всегда It."},
+  {q:"When is the grass green?",a:"The grass is green in spring and summer.",why:"<b>grass</b> = трава. <b>green</b> = зелёный."},
+  {q:"When are trees white?",a:"Trees are white in winter.",why:"<b>in winter</b> = зимой. Предлог in перед сезоном!"},
+  {q:"In what season are leaves yellow and red?",a:"Leaves are yellow and red in autumn.",why:"<b>leaves</b> = листья. <b>in autumn</b> = осенью."},
+  {q:"In what season can you see first flowers?",a:"I can see first flowers in spring.",why:"<b>first flowers</b> = первые цветы. in spring = весной."},
+  {q:"In what season is it cold and snowy?",a:"It is cold and snowy in winter.",why:"<b>It is + погода + in + сезон.</b> Всегда It!"},
+  {q:"In what season is it rainy and cloudy?",a:"It is rainy and cloudy in autumn.",why:"rainy = дождливо, cloudy = облачно."},
+  {q:"In what season is it hot and sunny?",a:"It is hot and sunny in summer.",why:"hot = жарко, sunny = солнечно."},
+  {q:"In what season is it sunny and warm?",a:"It is warm and sunny in spring.",why:"warm = тепло. Предлог in перед сезоном."},
+  {q:"What season comes after spring?",a:"Summer comes after spring.",why:"Лето = «оно» → come<b>s</b> с -s."},
+  {q:"What season comes after autumn?",a:"Winter comes after autumn.",why:"Зима = «оно» → come<b>s</b> с -s."},
+  {q:"What is the weather like today?",a:"It is rainy today.",why:"Погода всегда: <b>It is + прилагательное.</b> Никогда не Weather is!"},
+  {q:"What is the weather like in winter in Russia?",a:"It is snowy in winter in Russia.",why:"Порядок: It is + погода + in + сезон + in + страна."},
+  {q:"What is the weather like in winter in Great Britain?",a:"It is rainy and cold in winter in Great Britain.",why:"В Великобритании зимой дождь, не снег!"},
+  {q:"What can you do in summer?",a:"I can swim and ride a bike in summer.",why:"<b>ride a bike</b> = кататься на велосипеде. После can — без -s."},
+  {q:"What can you do in winter?",a:"I can ski and skate in winter.",why:"ski = лыжи, skate = коньки. После can — без -s."},
+  {q:"What do you like to do in winter?",a:"I like to ski and skate in winter.",why:"<b>I like to + глагол + in winter.</b>"},
+  {q:"What sports can you do in winter?",a:"I can play hockey in winter.",why:"<b>play + спорт.</b> hockey = хоккей."},
+  {q:"What sports can you do in summer?",a:"I can play football and volleyball in summer.",why:"football = футбол, volleyball = волейбол."},
+  {q:"What is the coldest season of the year?",a:"Winter is the coldest season of the year.",why:"<b>the coldest</b> = самый холодный. the обязателен!"},
+  {q:"What is the hottest season of the year?",a:"Summer is the hottest season of the year.",why:"<b>the hottest</b> = самый жаркий. the обязателен!"},
+  {q:"When does summer begin in Great Britain?",a:"Summer begins in May in Great Britain.",why:"Лето = «оно» → begin<b>s</b> с -s. in May = в мае."},
+  {q:"When does summer begin in Russia?",a:"Summer begins in June in Russia.",why:"В России лето с июня. begin<b>s</b> с -s."},
+  {q:"Is it cold in your country in winter?",a:"Yes, it is. It is cold in my country in winter.",why:"<b>Is it?</b> → <b>Yes, it is.</b> your → my."},
+  {q:"Does it often snow in winter?",a:"Yes, it does. It often snows in winter.",why:"<b>Does it?</b> → <b>Yes, it does.</b> Снег = it → snow<b>s</b>."},
+  {q:"Does it often rain in autumn?",a:"Yes, it does. It often rains in autumn.",why:"<b>Does it?</b> → <b>Yes, it does.</b> Дождь = it → rain<b>s</b>."},
+],
+months:[
+  {q:"How many months are there in a year?",a:"There are 12 months in a year.",why:"<b>How many...are there?</b> → <b>There are 12.</b> Запомни формулу!"},
+  {q:"What months do you know?",a:"I know 12 months. They are January, February, March, April, May, June, July, August, September, October, November, December.",why:"Все месяцы с большой буквы! Правило английского языка."},
+  {q:"How many winter months are there in Russia?",a:"There are 3 winter months in Russia. They are December, January and February.",why:"В России зима: 3 месяца. В GB зима: 4 месяца!"},
+  {q:"How many winter months are there in Great Britain?",a:"There are 4 winter months in Great Britain. They are November, December, January and February.",why:"В GB зима длиннее: с ноября!"},
+  {q:"How many summer months are there in Russia?",a:"There are 3 summer months in Russia. They are June, July and August.",why:"Россия: лето = июнь, июль, август."},
+  {q:"How many summer months are there in Great Britain?",a:"There are 4 summer months in Great Britain. They are May, June, July and August.",why:"GB: лето начинается в мае!"},
+  {q:"What are the winter months in Russia?",a:"The winter months in Russia are December, January and February.",why:"Россия: зима = декабрь, январь, февраль (3 месяца)."},
+  {q:"What are the winter months in Great Britain?",a:"The winter months in Great Britain are November, December, January and February.",why:"GB: зима = ноябрь, декабрь, январь, февраль (4 месяца!)."},
+  {q:"What are the summer months in Russia?",a:"The summer months in Russia are June, July and August.",why:"Россия: лето = июнь, июль, август."},
+  {q:"What are the spring months in Russia?",a:"The spring months in Russia are March, April and May.",why:"Россия: весна = март, апрель, май."},
+  {q:"What are the autumn months in Russia?",a:"The autumn months in Russia are September, October and November.",why:"Россия: осень = сентябрь, октябрь, ноябрь."},
+  {q:"Is November an autumn month in Russia?",a:"Yes, it is. It is an autumn month in Russia.",why:"<b>Is?</b> → <b>Yes, it is.</b> В России ноябрь — осень."},
+  {q:"Is November an autumn month in Great Britain?",a:"No, it isn't. It isn't an autumn month in Great Britain.",why:"В Великобритании ноябрь — уже зима!"},
+  {q:"Is May a spring month in Russia?",a:"Yes, it is. It is a spring month in Russia.",why:"В России май — весна. <b>Yes, it is.</b>"},
+  {q:"Is May a spring month in Great Britain?",a:"No, it isn't. It isn't a spring month in Great Britain.",why:"В Великобритании май — уже лето!"},
+  {q:"Is December a winter month in Russia?",a:"Yes, it is. It is a winter month in Russia.",why:"<b>Is?</b> → <b>Yes, it is.</b>"},
+  {q:"What holidays do English people celebrate in December?",a:"English people celebrate New Year and Christmas in December.",why:"People (они) → <b>celebrate</b> без -s. in December = в декабре."},
+  {q:"When does school begin in Russia?",a:"School begins in September in Russia.",why:"Школа = «она» → begin<b>s</b> с -s. in September = в сентябре."},
+  {q:"When does school begin in Great Britain?",a:"School begins in September in Great Britain.",why:"И в GB школа начинается в сентябре."},
+  {q:"How many days are there in December?",a:"There are 31 days in December.",why:"<b>There are 31 days in December.</b> Декабрь = 31 день."},
+  {q:"How many days are there in February?",a:"There are 28 days in February.",why:"Февраль = 28 дней (29 в високосный год)."},
+  {q:"How many days are there in April?",a:"There are 30 days in April.",why:"Апрель = 30 дней."},
+],
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+const LESSON=15;
+let queue=[],qi=0,lives=3,xp=0,nok=0,ner=0,total=0;
+let card=null,mode='',answered=false,sel=null;
+let bwords=[],bans=[];
+let lastTopic='all';
+
+// ═══════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function allCards(){
+  return Object.entries(CARDS).flatMap(([t,cs])=>cs.map(c=>({...c,topic:t})));
+}
+function topicCards(t){
+  return (CARDS[t]||[]).map(c=>({...c,topic:t}));
+}
+function pickQueue(t){
+  const pool=t==='all'?allCards():topicCards(t);
+  return sh(pool).slice(0,LESSON);
+}
+
+function norm(s){
+  return s.toLowerCase().replace(/[.,!?;:'"()\-\/]/g,'').replace(/\s+/g,' ').trim();
+}
+function isOk(user,correct){
+  const u=norm(user);
+  // check all slash-variants
+  for(const v of correct.split('/')){
+    if(norm(v.trim())===u) return true;
+  }
+  // fuzzy: if answer is long, allow 70% word match
+  const main=norm(correct.split('/')[0]);
+  const ws=main.split(' ').filter(w=>w.length>3);
+  if(ws.length>4){
+    const hits=ws.filter(w=>u.includes(w)).length;
+    if(hits/ws.length>=0.7) return true;
+  }
+  return false;
+}
+
+// ═══════════════════════════════════════════════
+// SCREENS
+// ═══════════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function goHome(){show('home');}
+
+// ═══════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════
+(function buildHome(){
+  document.getElementById('tlist').innerHTML=TOPICS.map(t=>`
+    <div class="tc" onclick="start('${t.id}')">
+      <div class="tci">${t.icon}</div>
+      <div><div class="tcn">${t.name}</div><div class="tcc">${(CARDS[t.id]||[]).length} вопросов</div></div>
+      <div style="margin-left:auto;color:#ccc;font-size:20px">›</div>
+    </div>`).join('');
+})();
+
+// ═══════════════════════════════════════════════
+// START
+// ═══════════════════════════════════════════════
+function start(t){
+  lastTopic=t;
+  queue=pickQueue(t);
+  qi=0;lives=3;xp=0;nok=0;ner=0;total=queue.length;
+  answered=false;
+  show('game');
+  renderLives();
+  renderDots();
+  updateBar();
+  nextQ();
+}
+
+// ═══════════════════════════════════════════════
+// QUESTION
+// ═══════════════════════════════════════════════
+function nextQ(){
+  if(qi>=queue.length){showFin();return;}
+  if(lives<=0){showFin();return;}
+  card=queue[qi];
+  answered=false;sel=null;
+  // alternate modes: even=choose, odd=build
+  mode=qi%2===0?'choose':'build';
+
+  // hide feedback, show check
+  const fb=document.getElementById('fb');
+  fb.className='fb';
+  document.getElementById('cw').style.display='';
+  setCk(false);
+
+  // topic label
+  const t=TOPICS.find(x=>x.id===card.topic);
+  document.getElementById('tlabel').textContent=t?t.icon+' '+t.name:'';
+
+  // mode badge
+  const mb=document.getElementById('mbadge');
+  if(mode==='choose'){
+    mb.className='mbadge choose';
+    mb.textContent='🎯 Выбери правильный ответ';
+  } else {
+    mb.className='mbadge build';
+    mb.textContent='🔧 Составь ответ из слов';
+  }
+
+  document.getElementById('qtxt').textContent=card.q;
+
+  const zone=document.getElementById('azone');
+  zone.innerHTML='';
+  if(mode==='choose') renderChoose(zone);
+  else renderBuild(zone);
+}
+
+// ── CHOOSE ──────────────────────
+function renderChoose(zone){
+  // pick 3 wrong answers from same topic first, then anywhere
+  const same=(CARDS[card.topic]||[]).filter(c=>c.a!==card.a);
+  const other=allCards().filter(c=>c.a!==card.a&&c.topic!==card.topic);
+  const pool=sh([...same,...other]);
+  // deduplicate by answer
+  const seen=new Set([norm(card.a)]);
+  const wrongs=[];
+  for(const c of pool){
+    const n=norm(c.a);
+    if(!seen.has(n)){seen.add(n);wrongs.push(c.a);}
+    if(wrongs.length>=3) break;
+  }
+  const opts=sh([card.a,...wrongs.slice(0,3)]);
+  zone.innerHTML=`<div class="opts">${opts.map((o,i)=>`
+    <button class="opt" onclick="selectOpt(this,'${encodeURIComponent(o)}')" data-v="${encodeURIComponent(o)}">
+      <div class="ol">${'ABCD'[i]}</div>
+      <div>${esc(o.length>90?o.slice(0,90)+'…':o)}</div>
+    </button>`).join('')}</div>`;
+}
+
+function selectOpt(btn,encVal){
+  if(answered) return;
+  const val=decodeURIComponent(encVal);
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  const ok=isOk(val,card.a);
+  btn.classList.add(ok?'ok':'er');
+  if(!ok){
+    document.querySelectorAll('.opt').forEach(b=>{
+      if(isOk(decodeURIComponent(b.dataset.v||''),card.a)) b.classList.add('rv');
+    });
+  }
+  answered=true;
+  doFeedback(ok);
+}
+
+// ── BUILD ──────────────────────
+function renderBuild(zone){
+  // take answer words + some decoy words from question / other answers
+  const ansWords=card.a.split(/\s+/);
+  // decoys: a few words from question that aren't in answer
+  const qWords=card.q.split(/\s+/).filter(w=>w.length>2&&!ansWords.some(a=>a.toLowerCase()===w.toLowerCase()));
+  const decoys=sh(qWords).slice(0,Math.min(4,qWords.length));
+  const allW=sh([...ansWords,...decoys]);
+  bwords=allW.map((w,i)=>({w,i,used:false}));
+  bans=[];
+  zone.innerHTML=`
+    <div class="drop" id="drop"><span class="drop-ph">Нажимай на слова ниже ↓</span></div>
+    <div class="pool" id="pool"></div>`;
+  rebuildPool();
+  rebuildDrop();
+}
+
+function rebuildPool(){
+  const el=document.getElementById('pool');
+  if(!el) return;
+  el.innerHTML=bwords.map((item,idx)=>
+    `<button class="chip${item.used?' used':''}" onclick="addW(${idx})" ${item.used?'disabled':''}>${esc(item.w)}</button>`
+  ).join('');
+}
+
+function rebuildDrop(){
+  const el=document.getElementById('drop');
+  if(!el) return;
+  el.className='drop'+(bans.length?' has':'');
+  el.innerHTML=bans.length
+    ? bans.map((item,i)=>`<button class="chip in" onclick="removeW(${i})">${esc(item.w)}</button>`).join('')
+    : '<span class="drop-ph">Нажимай на слова ниже ↓</span>';
+}
+
+function addW(idx){
+  if(bwords[idx].used) return;
+  bwords[idx].used=true;
+  bans.push(bwords[idx]);
+  rebuildPool();rebuildDrop();
+  setCk(bans.length>0);
+}
+
+function removeW(i){
+  const item=bans.splice(i,1)[0];
+  bwords[item.i].used=false;
+  rebuildPool();rebuildDrop();
+  setCk(bans.length>0);
+}
+
+// ── CHECK ──────────────────────
+function setCk(on){
+  const btn=document.getElementById('ckbtn');
+  btn.className='ckbtn'+(on?' on':'');
+  btn.disabled=!on;
+}
+
+function doCheck(){
+  if(answered){nextQ();return;}
+  if(mode==='choose') return;
+  // build mode
+  answered=true;
+  const user=bans.map(x=>x.w).join(' ');
+  const ok=isOk(user,card.a);
+  const drop=document.getElementById('drop');
+  if(drop) drop.classList.add(ok?'ok2':'er2');
+  doFeedback(ok);
+}
+
+// ═══════════════════════════════════════════════
+// FEEDBACK
+// ═══════════════════════════════════════════════
+const PRAISE=['Отлично! 🔥','Молодец!','Правильно!','Так держать!','Супер!','Умница! ⭐'];
+const OOPS=['Ошибочка...','Почти!','Не совсем...','Подумай ещё раз!'];
+
+function doFeedback(ok){
+  if(ok){
+    nok++;xp+=10;
+    showToast('+10 XP');
+    tickDot(qi,true);
+  } else {
+    ner++;lives=Math.max(0,lives-1);
+    renderLives();
+    tickDot(qi,false);
+    const m=document.getElementById('gmain');
+    m.classList.add('shake');
+    setTimeout(()=>m.classList.remove('shake'),380);
+  }
+  qi++;
+  updateBar();
+
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(ok?'ok':'er');
+  document.getElementById('fbe').textContent=ok?'🎉':'💔';
+  document.getElementById('fbtitle').textContent=ok?rnd(PRAISE):rnd(OOPS);
+  document.getElementById('fbans').textContent=ok?'':('✓ '+card.a.split('/')[0]);
+  document.getElementById('fbwhy').innerHTML=card.why||'';
+  document.getElementById('cw').style.display='none';
+}
+
+// ═══════════════════════════════════════════════
+// UI BITS
+// ═══════════════════════════════════════════════
+function renderLives(){
+  document.getElementById('hts').innerHTML=
+    [0,1,2].map(i=>`<span class="ht${i>=lives?' lost':''}">❤️</span>`).join('');
+}
+
+function updateBar(){
+  document.getElementById('pf').style.width=Math.min(100,(qi/total)*100)+'%';
+}
+
+function renderDots(){
+  document.getElementById('dots').innerHTML=
+    Array(Math.min(total,LESSON)).fill(0).map((_,i)=>`<div class="dot" id="d${i}"></div>`).join('');
+}
+
+function tickDot(i,ok){
+  const el=document.getElementById('d'+i);
+  if(el) el.classList.add(ok?'ok':'er');
+}
+
+function showToast(txt){
+  const t=document.createElement('div');
+  t.className='toast';t.textContent=txt;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1050);
+}
+
+// ═══════════════════════════════════════════════
+// FINISH
+// ═══════════════════════════════════════════════
+function showFin(){
+  show('fin');
+  document.getElementById('fxp').textContent=xp;
+  document.getElementById('fok').textContent=nok;
+  document.getElementById('fer').textContent=ner;
+  const total2=nok+ner;
+  const pct=total2?Math.round(nok/total2*100):0;
+  if(lives<=0){
+    document.getElementById('fowl').textContent='😔';
+    document.getElementById('ftitle').textContent='Жизни закончились';
+    document.getElementById('fsub').textContent='Ты молодец что стараешься! Попробуй ещё раз.';
+  } else if(pct>=90){
+    document.getElementById('fowl').textContent='🏆';
+    document.getElementById('ftitle').textContent='Превосходно!';
+    document.getElementById('fsub').textContent=pct+'% правильных — ты настоящий знаток!';
+  } else if(pct>=70){
+    document.getElementById('fowl').textContent='🎉';
+    document.getElementById('ftitle').textContent='Отличная работа!';
+    document.getElementById('fsub').textContent=pct+'% правильных. Ещё чуть-чуть!';
+  } else {
+    document.getElementById('fowl').textContent='💪';
+    document.getElementById('ftitle').textContent='Хорошее начало!';
+    document.getElementById('fsub').textContent=pct+'% правильных. Повторяй — станет лучше!';
+  }
+}
+</script>
+</body>
+</html>
